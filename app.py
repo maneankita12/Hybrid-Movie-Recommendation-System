@@ -9,7 +9,13 @@ from fuzzywuzzy import process
 import requests
 import os
 
-if os.path.exists('.env'):
+try:
+    if 'TMDB_API_KEY' in st.secrets:
+        os.environ['TMDB_API_KEY'] = st.secrets['TMDB_API_KEY']
+except:
+    pass
+
+if os.path.exists('.env') and 'TMDB_API_KEY' not in os.environ:
     with open('.env', 'r') as f:
         for line in f:
             if line.strip() and not line.startswith('#'):
@@ -171,7 +177,7 @@ def main():
         hybrid_engine, content_engine = load_engines()
         movies_df = load_movie_list()
     
-    # tmdb_api_key = os.environ.get('TMDB_API_KEY')
+    tmdb_api_key = os.environ.get('TMDB_API_KEY')
     
     # if tmdb_api_key:
     #     st.sidebar.success(f"✓ TMDB API configured (Key: ...{tmdb_api_key[-4:]})")
