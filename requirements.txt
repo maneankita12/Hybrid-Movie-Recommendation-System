@@ -1,14 +1,8 @@
-<<<<<<< HEAD
 streamlit==1.28.0
 pandas==2.0.3
 numpy==1.24.3
 scikit-learn==1.3.0
-scikit-surprise==1.1.3
 requests==2.31.0
 fuzzywuzzy==0.18.0
 python-Levenshtein==0.21.1
-=======
-altair
-pandas
-streamlit
->>>>>>> a47d919a1a6a2ff21481085728f9eaf393c7b937
+joblib==1.3.2

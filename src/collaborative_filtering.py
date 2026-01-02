@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import pickle
-from surprise import Dataset, Reader, SVD
+# from surprise import Dataset, Reader, SVD
 from surprise.model_selection import train_test_split, cross_validate
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -21,51 +21,51 @@ class CollaborativeFilteringEngine:
         self.index_to_movie_id = {}
         self.movie_id_to_title = {}
         
-    def load_data(self, ratings_path, movies_path):
-        ratings = pd.read_csv(ratings_path)
-        self.movies_df = pd.read_csv(movies_path)
+    # def load_data(self, ratings_path, movies_path):
+    #     ratings = pd.read_csv(ratings_path)
+    #     self.movies_df = pd.read_csv(movies_path)
     
-        self.movie_id_to_title = dict(zip(
-            self.movies_df['movieId'], 
-            self.movies_df['title']
-        ))
+    #     self.movie_id_to_title = dict(zip(
+    #         self.movies_df['movieId'], 
+    #         self.movies_df['title']
+    #     ))
         
-        reader = Reader(rating_scale=(0.5, 5.0))
-        data = Dataset.load_from_df(ratings[['userId', 'movieId', 'rating']], reader)
+    #     reader = Reader(rating_scale=(0.5, 5.0))
+    #     data = Dataset.load_from_df(ratings[['userId', 'movieId', 'rating']], reader)
         
-        print(f"Loaded {len(ratings)} ratings for {len(self.movies_df)} movies")
-        return data, ratings
+    #     print(f"Loaded {len(ratings)} ratings for {len(self.movies_df)} movies")
+    #     return data, ratings
     
-    def train(self, data):
-        trainset, testset = train_test_split(data, test_size=0.2, random_state=42)
-        self.trainset = trainset
+    # def train(self, data):
+    #     trainset, testset = train_test_split(data, test_size=0.2, random_state=42)
+    #     self.trainset = trainset
         
-        self.model = SVD(
-            n_factors=self.n_factors,
-            n_epochs=self.n_epochs,
-            lr_all=self.lr_all,
-            reg_all=self.reg_all,
-            random_state=42,
-            verbose=True
-        )
+    #     self.model = SVD(
+    #         n_factors=self.n_factors,
+    #         n_epochs=self.n_epochs,
+    #         lr_all=self.lr_all,
+    #         reg_all=self.reg_all,
+    #         random_state=42,
+    #         verbose=True
+    #     )
         
-        self.model.fit(trainset)
+    #     self.model.fit(trainset)
         
-        for iid in trainset.all_items():
-            raw_id = trainset.to_raw_iid(iid)
-            self.movie_id_to_index[raw_id] = iid
-            self.index_to_movie_id[iid] = raw_id
+    #     for iid in trainset.all_items():
+    #         raw_id = trainset.to_raw_iid(iid)
+    #         self.movie_id_to_index[raw_id] = iid
+    #         self.index_to_movie_id[iid] = raw_id
         
-        predictions = self.model.test(testset)
+    #     predictions = self.model.test(testset)
         
-        errors = [abs(pred.r_ui - pred.est) for pred in predictions]
-        rmse = np.sqrt(np.mean([e**2 for e in errors]))
-        mae = np.mean(errors)
+    #     errors = [abs(pred.r_ui - pred.est) for pred in predictions]
+    #     rmse = np.sqrt(np.mean([e**2 for e in errors]))
+    #     mae = np.mean(errors)
         
-        print(f"   RMSE: {rmse:.4f}")
-        print(f"   MAE: {mae:.4f}")
+    #     print(f"   RMSE: {rmse:.4f}")
+    #     print(f"   MAE: {mae:.4f}")
         
-        return {'rmse': rmse, 'mae': mae}
+    #     return {'rmse': rmse, 'mae': mae}
     
     def get_similar_movies(self, movie_id, top_k=10):
         if movie_id not in self.movie_id_to_index:
