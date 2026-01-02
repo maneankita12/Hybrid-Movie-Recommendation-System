@@ -9,13 +9,26 @@ from fuzzywuzzy import process
 import requests
 import os
 
+# try:
+#     if 'TMDB_API_KEY' in st.secrets:
+#         os.environ['TMDB_API_KEY'] = st.secrets['TMDB_API_KEY']
+# except:
+#     pass
+
+# if os.path.exists('.env') and 'TMDB_API_KEY' not in os.environ:
+#     with open('.env', 'r') as f:
+#         for line in f:
+#             if line.strip() and not line.startswith('#'):
+#                 key, value = line.strip().split('=', 1)
+#                 os.environ[key] = value
+
 try:
-    if 'TMDB_API_KEY' in st.secrets:
+    if hasattr(st, 'secrets') and 'TMDB_API_KEY' in st.secrets:
         os.environ['TMDB_API_KEY'] = st.secrets['TMDB_API_KEY']
 except:
     pass
 
-if os.path.exists('.env') and 'TMDB_API_KEY' not in os.environ:
+if 'TMDB_API_KEY' not in os.environ and os.path.exists('.env'):
     with open('.env', 'r') as f:
         for line in f:
             if line.strip() and not line.startswith('#'):
