@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import pickle
 # from surprise import Dataset, Reader, SVD
-from surprise.model_selection import train_test_split, cross_validate
+#from surprise.model_selection import train_test_split, cross_validate
 from sklearn.metrics.pairwise import cosine_similarity
 
 
