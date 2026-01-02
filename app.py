@@ -1,4 +1,13 @@
 import streamlit as st
+
+st.set_page_config(
+    page_title="Movie Recommender",
+    page_icon="🎬",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+
 import sys
 sys.path.insert(0, 'src')
 
@@ -35,12 +44,7 @@ if 'TMDB_API_KEY' not in os.environ and os.path.exists('.env'):
                 key, value = line.strip().split('=', 1)
                 os.environ[key] = value
 
-st.set_page_config(
-    page_title="Movie Recommender",
-    page_icon="🎬",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
+
 
 st.markdown("""
 <style>
