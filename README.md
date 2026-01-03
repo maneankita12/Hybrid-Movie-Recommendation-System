@@ -1,15 +1,3 @@
----
-title: Hybrid Movie Recommendation System
-emoji: 🎬
-colorFrom: blue
-colorTo: purple
-sdk: streamlit
-sdk_version: "1.28.0"
-app_file: app.py
-pinned: false
-python_version: "3.9"
----
-
 # Hybrid Movie Recommendation System
 
 An intelligent movie recommendation system combining Collaborative Filtering, Content-Based filtering, and Contextual AI.
